@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg-main: #090D16;
+  --surface-primary: #111827;
+  --surface-secondary: #0F172A;
+  --surface-elevated: rgba(17, 24, 39, 0.85);
+  --accent-primary: #10B981;
+  --accent-secondary: #14B8A6;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --border-subtle: rgba(148, 163, 184, 0.12);
+  --border-hover: rgba(148, 163, 184, 0.24);
+  --shadow-card: 0 4px 20px -2px rgba(2, 6, 23, 0.55), 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 16px 40px -8px rgba(2, 6, 23, 0.78), 0 0 0 1px rgba(148, 163, 184, 0.14);
+  --shadow-emerald-ambient: 0 8px 24px -4px rgba(16, 185, 129, 0.16), 0 0 0 1px rgba(16, 185, 129, 0.28);
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(16, 185, 129, 0.05), transparent),
+      radial-gradient(ellipse 60% 40% at 85% 10%, rgba(20, 184, 166, 0.03), transparent);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Crisp numeric alignment across odds, probabilities, and tables */
+  .font-mono,
+  [data-numeric="true"] {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Accessible focus-visible rings without layout shifts */
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  a:focus-visible {
+    outline: 2px solid rgba(16, 185, 129, 0.65);
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================================================
+   CUSTOM SLIM DARK-THEME SCROLLBARS
+   ========================================================================== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(71, 85, 105, 0.45) rgba(15, 23, 42, 0.4);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(9, 13, 22, 0.65);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(71, 85, 105, 0.45);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.55);
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+/* ==========================================================================
+   REFINED SURFACE, CARD & BUTTON POLISH UTILITIES
+   ========================================================================== */
+.pq-surface-card {
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.92) 0%, rgba(15, 23, 42, 0.96) 100%);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              box-shadow 0.2s ease,
+              background-color 0.2s ease;
+}
+
+.pq-surface-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 28px -4px rgba(2, 6, 23, 0.68), 0 1px 4px 0 rgba(0, 0, 0, 0.35);
+}
+
+.pq-surface-card-active {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border-color: rgba(16, 185, 129, 0.38);
+  box-shadow: var(--shadow-emerald-ambient);
+}
+
+.pq-panel-elevated {
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.95) 0%, rgba(11, 17, 30, 0.98) 100%);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-elevated);
+  backdrop-filter: blur(12px);
+}
+
+.pq-btn-transition {
+  transition: background-color 0.18s ease,
+              border-color 0.18s ease,
+              color 0.18s ease,
+              box-shadow 0.18s ease,
+              opacity 0.18s ease;
+}
+
+.pq-btn-transition:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* ==========================================================================
+   LIGHTWEIGHT ENTRANCE & INTERACTION ANIMATIONS
+   ========================================================================== */
+@keyframes pqFadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pqModalReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.pq-animate-panel {
+  animation: pqFadeSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.pq-animate-modal {
+  animation: pqModalReveal 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Range Input Refinement for Accumulator Builder */
+input[type="range"] {
+  accent-color: #10B981;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: RESPECT REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
